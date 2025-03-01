@@ -48,7 +48,7 @@
       }
     </style>
   </head>
-  <body class="bg-[#000000] text-white h-screen overflow-hidden">
+  <body class="bg-[#000000] text-white h-screen">
     <!-- Confetti canvas -->
     <canvas id="confetti-canvas"></canvas>
 
@@ -78,7 +78,7 @@
       </div>
 
       <!-- Content -->
-      <div class="flex flex-col lg:flex-row h-full w-full justify-center items-center gap-4 overflow-auto p-2 rounded-lg content-grid">
+      <div class="flex flex-col lg:flex-row flex-1 w-full justify-center items-center gap-4 p-2 rounded-lg content-grid">
         <!-- Jupiter Terminal - order-2 on small screens, order-1 on large screens -->
         <div
           id="integrated-terminal"
@@ -86,11 +86,11 @@
         ></div>
 
         <!-- Image - order-1 on small screens, order-2 on large screens -->
-        <div class="flex justify-center items-center order-1 lg:order-2">
+        <div class="flex justify-center items-center order-1 lg:order-2 my-4">
           <img
             src="juprinter_lr.gif"
             alt="JUPRINTER"
-            class="max-w-full max-h-[430px] lg:max-h-[500px] xl:max-h-[600px] object-contain"
+            class="max-w-full h-auto max-h-[430px] lg:max-h-[500px] xl:max-h-[600px] object-contain"
           />
         </div>
       </div>
@@ -108,8 +108,8 @@
           fixedOutputMint: true,
         },
         defaultSelectedTokenMints: {
-          inputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
-          outputMint: "So11111111111111111111111111111111111111112", // SOL
+          inputMint: "So11111111111111111111111111111111111111112", // SOL
+          outputMint: "Cao94sypFQ4AW1g8TALnnErteLc2te4EETjLqwZwD6vZ", // placeholder for juprinter
         },
         theme: {
           palette: {
