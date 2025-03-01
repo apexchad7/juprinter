@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>JUPRINTER</title>
+    <!-- Add Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Jupiter Terminal script -->
+    <script src="https://terminal.jup.ag/main-v4.js"></script>
+    <!-- Load Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      /* Custom styles for Jupiter Terminal */
+      #integrated-terminal {
+        background-color: #212830;
+      }
+
+      /* Custom background color for content grid */
+      /*.content-grid {
+        background-color: #0d1218;
+      }*/
+
+      /* Hero text animation */
+      .hero-text {
+        background-size: 200% auto;
+        animation: shine 0.5s linear infinite;
+      }
+
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      /* Confetti canvas */
+      #confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body class="bg-[#000000] text-white h-screen overflow-hidden">
+    <!-- Confetti canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="h-full flex flex-col p-4">
+      <!-- Header -->
+      <div class="mt-6 flex justify-center items-center gap-4 flex-wrap mb-4">
+        <h1 class="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">JUPRINTER</h1>
+        <img
+          src="jupiter-logo.svg"
+          alt="Jupiter"
+          class="mt-2 w-10 h-auto transition-transform hover:scale-110"
+        />
+      </div>
+
+      <!-- Mint Address -->
+      <div class="flex justify-center items-center gap-4 flex-wrap mb-4">
+        <h1 class="text-sm md:text-md lg:text-md xl:text-md text-center text-white">Cao94sypFQ4AW1g8TALnnErteLc2te4EETjLqwZwD6vZ</h1>
+      </div>
+
+      <!-- Hero Text -->
+      <div class="mt-8 mb-6 flex justify-center items-center gap-4 flex-wrap px-4">
+        <h1
+          class="hero-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-sky-500 to-purple-500"
+        >
+          Ape Juprinter.. Earn Jup
+        </h1>
+      </div>
+
+      <!-- Content -->
+      <div class="flex flex-col lg:flex-row h-full w-full justify-center items-center gap-4 overflow-auto p-2 rounded-lg content-grid">
+        <!-- Jupiter Terminal - order-2 on small screens, order-1 on large screens -->
+        <div
+          id="integrated-terminal"
+          class="w-full lg:w-[400px] h-[450px] rounded-lg overflow-hidden shadow-lg order-2 lg:order-1 flex-shrink-0"
+        ></div>
+
+        <!-- Image - order-1 on small screens, order-2 on large screens -->
+        <div class="flex justify-center items-center order-1 lg:order-2">
+          <img
+            src="juprinter_lr.gif"
+            alt="JUPRINTER"
+            class="max-w-full max-h-[430px] lg:max-h-[500px] xl:max-h-[600px] object-contain"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Initialize Jupiter Terminal
+      window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
+        endpoint: "https://fabled-ancient-dinghy.solana-mainnet.quiknode.pro/74a4d80d55c65741414db878a1e82b3dafbb1894/",
+        defaultExplorer: "Solscan",
+        formProps: {
+          fixedInputMint: true,
+          fixedOutputMint: true,
+        },
+        defaultSelectedTokenMints: {
+          inputMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
+          outputMint: "So11111111111111111111111111111111111111112", // SOL
+        },
+        theme: {
+          palette: {
+            mode: "dark",
+            primary: {
+              main: "#171c24",
+            },
+            background: {
+              paper: "#171c24",
+              default: "#171c24",
+            },
+          },
+        },
+      });
+
+      // Setup confetti
+      const canvas = document.getElementById("confetti-canvas");
+      const myConfetti = confetti.create(canvas, {
+        resize: true,
+        useWorker: true,
+      });
+
+      // Function to create a continuous confetti effect
+      function startConfetti() {
+        // Side confetti colors (greens, blues, yellows)
+        const sideColors = ["#00ff00", "#0099ff", "#ff00ff", "#ffff00", "#00ffff"];
+
+        // Top confetti colors (reds, blues, violets)
+        //const topColors = ["#ff0000", "#0000ff", "#8a2be2", "#ff00ff", "#4b0082"];
+        const topColors = ["#00ff00", "#0099ff", "#ff00ff", "#ffff00", "#00ffff"];
+
+        // Create a continuous confetti effect from sides
+        const sideInterval = setInterval(() => {
+          // Left side
+          myConfetti({
+            particleCount: 2,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: sideColors,
+          });
+
+          // Right side
+          myConfetti({
+            particleCount: 2,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: sideColors,
+          });
+        }, 40);
+
+        // Create a more prominent confetti effect from top
+        const topInterval = setInterval(() => {
+          // Multiple random positions across the top
+          for (let i = 0; i < 3; i++) {
+            const randomX = Math.random();
+
+            myConfetti({
+              particleCount: 8,
+              angle: 90,
+              spread: 60,
+              origin: { x: randomX, y: 0 },
+              colors: topColors,
+              gravity: 1.75,
+              scalar: 1.2,
+              drift: 0,
+              ticks: 300,
+            });
+          }
+        }, 200);
+
+        // Optional: Stop after some time to prevent performance issues
+        setTimeout(() => {
+          clearInterval(sideInterval);
+          clearInterval(topInterval);
+        }, 5000); // Run for 5 seconds
+      }
+
+      // Start confetti when page loads
+      window.addEventListener("load", startConfetti);
+
+      // Restart confetti when clicked anywhere on the page
+      document.body.addEventListener("click", () => {
+        startConfetti();
+      });
+    </script>
+  </body>
+</html>
